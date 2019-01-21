@@ -13,6 +13,16 @@ module.exports = server => {
     server.post('/user/register', async (req, res, next) => {
         try {
             const { email, password, phone } = req.body;
+            if(email == null) {
+                return next(new error.InvalidContentError("Email must be filled"));
+            }
+            if(password == null) {
+                return next(new error.InvalidContentError("Password must be filled"));
+            }
+            if(phone == null) {
+                return next(new error.InvalidContentError("Phone must be filled"));
+            }
+            
             const isEmail = validator.isEmail(email);
             const isAlphaNum = validator.isAlphanumeric(password);
             const isMinLength = validator.isLength(password, { min: 8 });

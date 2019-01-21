@@ -2,7 +2,6 @@ const restify = require('restify');
 const mongoose = require('mongoose');
 const config = require('./config');
 const rjwt = require('restify-jwt-community');
-const render = require('restify-render-middleware');
  
 const server = restify.createServer();
 
@@ -10,7 +9,7 @@ const server = restify.createServer();
 server.use(restify.plugins.bodyParser());
 
 //Protect routes
-server.use(rjwt({ secret: config.JWT_SECRET }).unless({ path: ['/auth', '/register'] }));
+server.use(rjwt({ secret: config.JWT_SECRET }).unless({ path: ['/user/auth', '/user/register', '/user/profile'] }));
 
 server.listen(config.PORT, () => {
     mongoose.set('useFindAndModify', false);
